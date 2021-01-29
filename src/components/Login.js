@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const initialCredentials = {
@@ -19,9 +19,11 @@ const Login = (props) => {
       [name] : value
     })
   }
-
+  const [error, setError] = useState(false)
+  
   const handleSubmit = e => {
     e.preventDefault();
+    setError(false)
     // console.log('submit');
     axios
       .post('http://localhost:5000/api/login', credentials)
@@ -31,7 +33,9 @@ const Login = (props) => {
         props.history.push('/bubbles')
       })
       .catch(err => {
+        setError(true)
         console.log('login fail: ', err)
+
       })
   }
 
@@ -39,9 +43,11 @@ const Login = (props) => {
     <>
       <h1>
         Welcome to the Bubble App!
-        <p>Login here!</p>
+      </h1>
+        <div>
+        <h3>Login here!</h3>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='username'>Username
+          <label htmlFor='username'>username
           <input 
             type='username'
             id='username'
@@ -51,7 +57,7 @@ const Login = (props) => {
             placeholder='Username'
           />
           </label>
-          <label htmlFor='password'>Password
+          <label htmlFor='password'>password
           <input 
             type='password'
             id='password'
@@ -61,9 +67,10 @@ const Login = (props) => {
             placeholder='Password'
           />
           </label>
-        <button>Log in!</button>
+          <button>Log in!</button>
         </form>
-      </h1>
+        {error && <p>Username or Password not valid.</p>}
+        </div>
     </>
   );
 };
