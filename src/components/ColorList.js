@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosWithAuth from '../helpers/axiosWithAuth';
 
+import EditMenu from './EditMenu';
 const initialColor = {
   color: "",
   code: { hex: "" }
@@ -17,10 +18,40 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
+    axiosWithAuth()
+      .put(`/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res => {
+        updateColors( 
+          //Doing a map function, if the color ID in the original array, matches the editied color's ID, it replaces with the new edited color
+          colors.map(color => {
+            if (color.id === res.data.id) {
+              return res.data;
+            } else {
+              return color;
+            }
+          })
+        )
+      })
+      .catch(err => {
+        console.log('put fail: ', err)
+      })
 
   };
 
   const deleteColor = color => {
+    axiosWithAuth()
+      .delete(`/colors/${color.id}`)
+      .then(res => {
+        updateColors(
+          colors.filter(item => {
+            return item.id !== Number(res.data) //Server returns a string, had to change to number
+            //Alternative would have been to simply use != instead of !==
+          })
+        );
+      })
+      .catch(err => {
+        console.log('delete fail: ', err)
+      })
   };
 
   return (
