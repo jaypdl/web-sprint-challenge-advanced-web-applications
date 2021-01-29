@@ -31,11 +31,12 @@ const Login = (props) => {
         // console.log('login success: ', res)
         localStorage.setItem('token', res.data.payload)
         props.history.push('/bubbles')
+        setCredentials(initialCredentials);
       })
       .catch(err => {
         setError(true)
         console.log('login fail: ', err)
-
+        setCredentials(initialCredentials);
       })
   }
 
