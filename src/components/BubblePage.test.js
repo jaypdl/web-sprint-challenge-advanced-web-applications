@@ -1,11 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import BubblePage from "./BubblePage";
+import Bubbles from './Bubbles';
 
-// import mockAxiosWithAuth from '../helpers/axiosWithAuth'
+// import mockAxiosWithAuth from '../helpers/axiosWithAuth';
 // jest.mock('../helpers/axiosWithAuth.js')
 
-const colorData = [
+const mockColorData = [
   { color: "aliceblue", code: { hex: "#f0f8ff" }, id: 1 },
   { color: "limegreen", code: { hex: "#99ddbc" }, id: 2 },
   { color: "aqua", code: { hex: "#00ffff" }, id: 3 },
@@ -19,18 +20,18 @@ const colorData = [
   { color: "blueviolet", code: { hex: "#8a2be2" }, id: 11 },
 ];
 
+
 test("Renders BubblePage without errors", () => {
+  // mockAxiosWithAuth.mockResolvedValueOnce(mockColorData)
+
   render(<BubblePage />);
 });
 
-test("Fetches data and renders the bubbles on mounting", () => {
+test("Fetches data and renders the bubbles on mounting", async () => {
   // Finish this test
-  // mockAxiosWithAuth.mockResolvedValueOnce(colorData)
-  render(<BubblePage colors={colorData}/>)
+  render(<Bubbles colors={mockColorData} />);
+  
 
-  const colorSearch = screen.getByText(/aliceblue/i);
-
-  expect(colorSearch).toBeInTheDocument();
 });
 
 //Task List
