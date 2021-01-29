@@ -29,7 +29,7 @@ Commit your code regularly and meaningfully. This helps both you (in case you ev
 
 ### Task 1: Project Set Up
 
-- [ ] Create a forked copy of this project
+- [x] Create a forked copy of this project
 - [ ] Clone your OWN version of the repository (Not Lambda's by mistake!)
 - [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
 - [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly
