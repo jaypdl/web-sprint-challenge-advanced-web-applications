@@ -32,7 +32,7 @@ const Bubbles = ({ colors }) => {
                 if (i < colors.length) {
                   return (
                     <Circle
-                      data-testid='bubblesTest'
+                      data-testid='bubblesTest' //Added test ID to Find Bubbles
                       key={key}
                       cx={x}
                       cy={y}

@@ -1,5 +1,8 @@
 import axiosWithAuth from './axiosWithAuth';
 
+
+//Had to move the actual request out of BubblePage.js since I kept getting testing errors about '.get' not being a function when trying to do a mock, causing all my tests to fail.
+
 const getColorData = () => {
   return axiosWithAuth()
     .get('/colors')
