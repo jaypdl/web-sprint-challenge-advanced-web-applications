@@ -1,9 +1,9 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, wait, waitFor } from "@testing-library/react";
 import BubblePage from "./BubblePage";
 import Bubbles from './Bubbles';
 
-import mockAxiosWithAuth from '../helpers/axiosWithAuth';
+import mockGetColorData from '../helpers/getColorData';
 
 const mockColorData = [
   { color: "aliceblue", code: { hex: "#f0f8ff" }, id: 1 },
@@ -19,16 +19,31 @@ const mockColorData = [
   { color: "blueviolet", code: { hex: "#8a2be2" }, id: 11 },
 ];
 
-// jest.mock('../helpers/axiosWithAuth.js',() => () =>mockColorData)
+jest.mock('../helpers/getColorData.js');
 
-test("Renders BubblePage without errors", () => {
-  // mockAxiosWithAuth.mockResolvedValueOnce(mockColorData)
-
+test("Renders BubblePage without errors", async () => {
+  mockGetColorData.mockResolvedValueOnce([])
   render(<BubblePage />);
+  
+  await waitFor( () => {
+    expect(screen.getByText(/colors/i)).toBeInTheDocument();
+  })
 });
 
 test("Fetches data and renders the bubbles on mounting", async () => {
   // Finish this test
+  mockGetColorData.mockResolvedValueOnce(mockColorData)
+  render(<BubblePage />);
+
+  const aliceColor = await screen.findByText(/aliceblue/i);
+  expect(aliceColor).toBeInTheDocument()
+  
+  const bubbles = await screen.findAllByTestId('bubblesTest')
+  expect(bubbles).toHaveLength(11);
+
+});
+
+test("Renders 'bubbles' on mounting", () => {
   render(<Bubbles colors={mockColorData} />);
   expect(screen.getByText(/bubbles/i)).toBeInTheDocument();
   
